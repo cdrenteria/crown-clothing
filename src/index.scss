@@ -5,10 +5,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-html {
+
+//dark bg for dev
+/*html {
   height: 100vh;
   background-color: #36454F;
-}
+}*/
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
