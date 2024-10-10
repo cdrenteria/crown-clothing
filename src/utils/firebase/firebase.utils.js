@@ -1,5 +1,13 @@
 import { initializeApp } from "firebase/app";
-import {getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword} from "firebase/auth";
+import {getAuth, 
+    signInWithRedirect, 
+    signInWithPopup, 
+    signInWithEmailAndPassword, 
+    GoogleAuthProvider, 
+    createUserWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
+} from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -23,6 +31,12 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 export const db = getFirestore();
+
+export const authenticateUserWithEmailAndPassword =  async ( email, password ) => {
+    if (!email || !password) return;
+    const {user} = await signInWithEmailAndPassword(auth, email, password);
+    return user;
+}
 
 // Takes in a userAuth object to either read or create the user in the Firestore "users" collection
 export const createUserDocumentFromAuth = async (
@@ -57,3 +71,7 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return;
     return await createUserWithEmailAndPassword(auth, email, password);
 }; 
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangeListener = (callback) => onAuthStateChanged(auth, callback);
